@@ -1,7 +1,18 @@
 {
-  "name": "Aluracord - Matrix (peas)",
+  "name": "Aluracord - Animes David",
   "theme": {
     "colors": {
+      "alterarDavid": {
+        "050": "#6A5ACD",
+        "100": "#836FFF",
+        "200": "#6959CD",
+        "300": "#483D8B",
+        "400": "#191970",
+        "500": "#000080",
+        "600": "#00008B",
+        "700": "#0000CD",
+        "800": "#0000FF"
+      },
       "primary": {
         "050": "#E3F9E5",
         "100": "#C1EAC5",

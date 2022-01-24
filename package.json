@@ -2,6 +2,7 @@
   "name": "aluracord",
   "version": "1.0.0",
   "main": "index.js",
+  "author": "David Tavares",
   "license": "MIT",
   "dependencies": {
     "@skynexui/components": "^1.23.5",
