@@ -74,9 +74,9 @@ export default function PaginaInicial() {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          backgroundColor: appConfig.theme.colors.primary[500],
+          backgroundColor: appConfig.theme.colors.neutrals[100],
           backgroundImage:
-            "url(https://virtualbackgrounds.site/wp-content/uploads/2020/08/the-matrix-digital-rain.jpg)",
+            "url(http://2.bp.blogspot.com/-2Djr_ObCarw/Vlx_Ja-G7dI/AAAAAAAAABM/UYxNxw0XRNA/s1600/anime%25281%2529.png)",
           backgroundRepeat: "no-repeat",
           backgroundSize: "cover",
           backgroundBlendMode: "multiply",
@@ -113,7 +113,7 @@ export default function PaginaInicial() {
               marginBottom: "32px",
             }}
           >
-            <Title tag="h2">Boas vindas de volta!</Title>
+            <Title tag="h2">Boas vindas de volta Animers!</Title>
             <Text
               variant="body3"
               styleSheet={{
@@ -130,7 +130,7 @@ export default function PaginaInicial() {
                 neutral: {
                   textColor: appConfig.theme.colors.neutrals[200],
                   mainColor: appConfig.theme.colors.neutrals[900],
-                  mainColorHighlight: appConfig.theme.colors.primary[500],
+                  mainColorHighlight: appConfig.theme.colors.alterarDavid[800],
                   backgroundColor: appConfig.theme.colors.neutrals[800],
                 },
               }}
@@ -141,9 +141,9 @@ export default function PaginaInicial() {
               fullWidth
               buttonColors={{
                 contrastColor: appConfig.theme.colors.neutrals["000"],
-                mainColor: appConfig.theme.colors.primary[500],
-                mainColorLight: appConfig.theme.colors.primary[400],
-                mainColorStrong: appConfig.theme.colors.primary[600],
+                mainColor: appConfig.theme.colors.alterarDavid[800],
+                mainColorLight: appConfig.theme.colors.alterarDavid[400],
+                mainColorStrong: appConfig.theme.colors.alterarDavid[400],
               }}
             />
           </Box>
