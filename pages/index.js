@@ -3,6 +3,37 @@ import appConfig from "../config.json";
 import { useRouter } from 'next/router'
 import React from "react";
 
+function GlobalStyle() {
+  return (
+    <style global jsx>{`
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        list-style: none;
+      }
+      body {
+        font-family: "Open Sans", sans-serif;
+      }
+      /* App fit Height */
+      html,
+      body,
+      #__next {
+        min-height: 100vh;
+        display: flex;
+        flex: 1;
+      }
+      #__next {
+        flex: 1;
+      }
+      #__next > * {
+        flex: 1;
+      }
+      /* ./App fit Height */
+    `}</style>
+  );
+}
+
 function Title(props) {
   console.log(props);
   const Tag = props.tag || 'h1';
@@ -80,7 +111,7 @@ export default function PaginaInicial() {
             onSubmit={function(infosDoEvento) {
               infosDoEvento.preventDefault();
               console.log('Alguém submeteu o form')
-              roteamento.push('/chat')
+              roteamento.push('/chat');
             }}
             styleSheet={{
               display: "flex",
@@ -136,6 +167,7 @@ export default function PaginaInicial() {
               }}
             />
             <Button
+              disabled={username.length < 3}
               type="submit"
               label="Entrar"
               fullWidth
@@ -151,6 +183,7 @@ export default function PaginaInicial() {
 
           {/* Photo Area */}
           <Box
+            style={{ display: username.length < 3 ? "none" : "flex" }}
             styleSheet={{
               display: "flex",
               flexDirection: "column",
