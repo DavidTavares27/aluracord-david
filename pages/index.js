@@ -1,36 +1,7 @@
 import { Box, Button, Text, TextField, Image } from "@skynexui/components";
 import appConfig from "../config.json";
-
-function GlobalStyle() {
-  return (
-    <style global jsx>{`
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        list-style: none;
-      }
-      body {
-        font-family: "Open Sans", sans-serif;
-      }
-      /* App fit Height */
-      html,
-      body,
-      #__next {
-        min-height: 100vh;
-        display: flex;
-        flex: 1;
-      }
-      #__next {
-        flex: 1;
-      }
-      #__next > * {
-        flex: 1;
-      }
-      /* ./App fit Height */
-    `}</style>
-  );
-}
+import { useRouter } from 'next/router'
+import React from "react";
 
 function Title(props) {
   console.log(props);
@@ -64,20 +35,22 @@ function Title(props) {
 // export default HomePage
 
 export default function PaginaInicial() {
-  const username = "DavidTavares27";
+  // const username = "DavidTavares27";
+  const [username, setUsername] = React.useState('DavidTavares27');
+  const roteamento = useRouter();
 
   return (
     <>
-      <GlobalStyle />
       <Box
         styleSheet={{
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          backgroundColor: appConfig.theme.colors.neutrals[100],
+          backgroundColor: appConfig.theme.colors.branco[100],
           backgroundImage:
             "url(http://2.bp.blogspot.com/-2Djr_ObCarw/Vlx_Ja-G7dI/AAAAAAAAABM/UYxNxw0XRNA/s1600/anime%25281%2529.png)",
           backgroundRepeat: "no-repeat",
+          backgroundPosition: "bottom center",
           backgroundSize: "cover",
           backgroundBlendMode: "multiply",
         }}
@@ -98,11 +71,17 @@ export default function PaginaInicial() {
             margin: "16px",
             boxShadow: "0 2px 10px 0 rgb(0 0 0 / 20%)",
             backgroundColor: appConfig.theme.colors.neutrals[700],
+            opacity: 0.9,
           }}
         >
           {/* Formulário */}
           <Box
             as="form"
+            onSubmit={function(infosDoEvento) {
+              infosDoEvento.preventDefault();
+              console.log('Alguém submeteu o form')
+              roteamento.push('/chat')
+            }}
             styleSheet={{
               display: "flex",
               flexDirection: "column",
@@ -124,14 +103,35 @@ export default function PaginaInicial() {
               {appConfig.name}
             </Text>
 
+            {/* <input 
+              type="text"
+              value={username}
+              onChange={function(event) {
+                //Onde está o valor
+                const valor = event.target.value;
+                //Trocar valor da variável
+                //através do React e avise quem precisa
+                setUsername(valor);
+              }}
+            /> */}
+
             <TextField
+              value={username}
+              onChange={function(event) {
+                //Onde está o valor
+                const valor = event.target.value;
+                //Trocar valor da variável
+                //através do React e avise quem precisa
+                setUsername(valor);
+              }}
+              placeholder="Digite seu usuário"
               fullWidth
               textFieldColors={{
                 neutral: {
                   textColor: appConfig.theme.colors.neutrals[200],
                   mainColor: appConfig.theme.colors.neutrals[900],
                   mainColorHighlight: appConfig.theme.colors.alterarDavid[800],
-                  backgroundColor: appConfig.theme.colors.neutrals[800],
+                  backgroundColor: appConfig.theme.colors.neutrals[300],
                 },
               }}
             />
