@@ -3,37 +3,6 @@ import appConfig from "../config.json";
 import { useRouter } from 'next/router'
 import React from "react";
 
-function GlobalStyle() {
-  return (
-    <style global jsx>{`
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        list-style: none;
-      }
-      body {
-        font-family: "Open Sans", sans-serif;
-      }
-      /* App fit Height */
-      html,
-      body,
-      #__next {
-        min-height: 100vh;
-        display: flex;
-        flex: 1;
-      }
-      #__next {
-        flex: 1;
-      }
-      #__next > * {
-        flex: 1;
-      }
-      /* ./App fit Height */
-    `}</style>
-  );
-}
-
 function Title(props) {
   console.log(props);
   const Tag = props.tag || 'h1';
@@ -77,7 +46,7 @@ export default function PaginaInicial() {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          backgroundColor: appConfig.theme.colors.branco[100],
+          backgroundColor:  "rgba(0,0,0,0)",
           backgroundImage:
             "url(http://2.bp.blogspot.com/-2Djr_ObCarw/Vlx_Ja-G7dI/AAAAAAAAABM/UYxNxw0XRNA/s1600/anime%25281%2529.png)",
           backgroundRepeat: "no-repeat",
@@ -101,8 +70,7 @@ export default function PaginaInicial() {
             padding: "32px",
             margin: "16px",
             boxShadow: "0 2px 10px 0 rgb(0 0 0 / 20%)",
-            backgroundColor: appConfig.theme.colors.neutrals[700],
-            opacity: 0.9,
+            backgroundColor: "rgba( 0, 0, 0, 0.8 )",
           }}
         >
           {/* Formulário */}
@@ -159,10 +127,10 @@ export default function PaginaInicial() {
               fullWidth
               textFieldColors={{
                 neutral: {
-                  textColor: appConfig.theme.colors.neutrals[200],
+                  textColor: appConfig.theme.colors.neutrals[900],
                   mainColor: appConfig.theme.colors.neutrals[900],
                   mainColorHighlight: appConfig.theme.colors.alterarDavid[800],
-                  backgroundColor: appConfig.theme.colors.neutrals[300],
+                  backgroundColor: "rgba(135,206,235, 0.9)",
                 },
               }}
             />
@@ -173,9 +141,9 @@ export default function PaginaInicial() {
               fullWidth
               buttonColors={{
                 contrastColor: appConfig.theme.colors.neutrals["000"],
-                mainColor: appConfig.theme.colors.alterarDavid[800],
+                mainColor: "rgb(30,144,255)",
                 mainColorLight: appConfig.theme.colors.alterarDavid[400],
-                mainColorStrong: appConfig.theme.colors.alterarDavid[400],
+                mainColorStrong: "rgb(0,191,255)",
               }}
             />
           </Box>
