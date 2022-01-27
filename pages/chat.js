@@ -2,20 +2,48 @@
 import { Box, Text, TextField, Image, Button, } from "@skynexui/components";
 import React, { useState } from "react";
 import appConfig from "../config.json";
+import {createClient} from '@supabase/supabase-js'
 
-export default function ChatPage() {
+export default function ChatPage({SUPABASE_URL, SUPABASE_ANON_KEY} ) {
+  const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY );
+  // console.log(SUPABASE_ANON_KEY);
+  // console.log(SUPABASE_URL);
+
+
   const [message, setMessage] = useState("");
   const [messageList, setMessageList] = useState([]);
-
+  React.useEffect(() => {
+      supabaseClient
+        .from('mensagem')
+        .select('*')
+        .order('id', {ascending: false })
+        .then(({data}) => {
+          console.log('Dados da consulta', data)
+          setMessageList(data);
+        })
+  }, []);
+ 
   function handleNewMessage(newMessage) {
     const message = {
-      id: messageList.length + Math.random() * 100,
+      // id: messageList.length + Math.random() * 100,
       text: newMessage,
       user: "DavidTavares27",
     };
 
-    setMessageList([message, ...messageList]);
-    setMessage("");
+    supabaseClient
+      .from('mensagem')
+      .insert([
+        //Tem que ser um objeto com os mesmos campos que foram escritos no supabase
+        message
+      ])
+      .then(({data}) => {
+          // console.log("criando mensagem", Retorno)
+          setMessageList([data[0], ...messageList,
+          ]);
+          setMessage("");
+      });
+
+   
   }
 
   function handleDeleteMessage(event) {
@@ -136,6 +164,19 @@ export default function ChatPage() {
       </Box>
     </Box>
   );
+}
+
+export async function getServerSideProps() {
+  //const key = process.env.SUPABASE_ANON_KEY;
+  //const key = process.env.SUPABASE_URL:
+  const { SUPABASE_ANON_KEY, SUPABASE_URL} = process.env;
+
+  return {
+    props: {
+      SUPABASE_ANON_KEY,
+      SUPABASE_URL,
+    },
+  };
 }
 
 function Header() {
