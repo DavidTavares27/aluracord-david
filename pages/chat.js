@@ -9,7 +9,6 @@ export default function ChatPage({SUPABASE_URL, SUPABASE_ANON_KEY} ) {
   // console.log(SUPABASE_ANON_KEY);
   // console.log(SUPABASE_URL);
 
-
   const [message, setMessage] = useState("");
   const [messageList, setMessageList] = useState([]);
   React.useEffect(() => {
