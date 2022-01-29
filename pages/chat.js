@@ -2,15 +2,32 @@
 import { Box, Text, TextField, Image, Button, } from "@skynexui/components";
 import React, { useState } from "react";
 import appConfig from "../config.json";
+import { useRouter } from 'next/router';
 import {createClient} from '@supabase/supabase-js'
+import { ButtonSendSticker } from '../src/components/ButtonSendSticker'
+
 
 export default function ChatPage({SUPABASE_URL, SUPABASE_ANON_KEY} ) {
+  const roteamento = useRouter();
+  const usuarioLogado = roteamento.query.username;
   const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY );
   // console.log(SUPABASE_ANON_KEY);
   // console.log(SUPABASE_URL);
 
+  function listeningMessageRealTimes(addMessage) {
+    return supabaseClient
+    .from('mensagem')
+    .on('INSERT', (respostaLive) => {
+
+        addMessage(respostaLive.new);
+        console.log(respostaLive)
+    })
+    .subscribe();
+  }
   const [message, setMessage] = useState("");
-  const [messageList, setMessageList] = useState([]);
+  const [messageList, setMessageList] = useState([
+
+  ]);
   React.useEffect(() => {
       supabaseClient
         .from('mensagem')
@@ -19,14 +36,24 @@ export default function ChatPage({SUPABASE_URL, SUPABASE_ANON_KEY} ) {
         .then(({data}) => {
           console.log('Dados da consulta', data)
           setMessageList(data);
-        })
+        });
+
+        listeningMessageRealTimes((newMessage) => {
+          setMessageList((currentListValue) => {
+            return [
+              newMessage,
+              ...currentListValue,
+              
+            ]
+          })
+        });
   }, []);
  
   function handleNewMessage(newMessage) {
     const message = {
       // id: messageList.length + Math.random() * 100,
+      user: usuarioLogado,
       text: newMessage,
-      user: "DavidTavares27",
     };
 
     supabaseClient
@@ -37,10 +64,10 @@ export default function ChatPage({SUPABASE_URL, SUPABASE_ANON_KEY} ) {
       ])
       .then(({data}) => {
           // console.log("criando mensagem", Retorno)
-          setMessageList([data[0], ...messageList,
-          ]);
-          setMessage("");
+
+          
       });
+      setMessage("");
 
    
   }
@@ -142,6 +169,15 @@ export default function ChatPage({SUPABASE_URL, SUPABASE_ANON_KEY} ) {
                 color: appConfig.theme.colors.neutrals[200],
               }}
             />
+            {/* Callback */}
+            <ButtonSendSticker 
+            onStickerClick={(sticker) => {
+              console.log('Salva esse estiker no Banco', sticker);
+              handleNewMessage(':sticker: ' + sticker)
+
+            }}
+            />
+                
             <Button
               onClick={() => handleNewMessage(message)}
               label="Enviar"
@@ -273,7 +309,8 @@ function MessageList(props) {
                 }}
                 tag="span"
               >
-                {new Date().toLocaleDateString()}
+                {new Date(messageItem.created_at).toUTCString().slice(4, -7)}
+                
               </Text>
               <Text
                 onClick={handleDeleteMessage}
@@ -298,7 +335,16 @@ function MessageList(props) {
                X
               </Text>
             </Box>
-            {messageItem.text}
+            {/* {message.text.startsWith('sticker:').toString()} */}
+            {messageItem.text.startsWith(':sticker:') 
+              ? (
+                <Image src={messageItem.text.replace(':sticker:', '')}/>
+              )
+              : (
+                messageItem.text
+              )}
+            
+            {/* {messageItem.text} */}
           </Text>
         );
       })}

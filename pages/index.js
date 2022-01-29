@@ -36,7 +36,7 @@ function Title(props) {
 
 export default function PaginaInicial() {
   // const username = "DavidTavares27";
-  const [username, setUsername] = React.useState('DavidTavares27');
+  const [username, setUsername] = React.useState('');
   const roteamento = useRouter();
 
   return (
@@ -79,7 +79,9 @@ export default function PaginaInicial() {
             onSubmit={function(infosDoEvento) {
               infosDoEvento.preventDefault();
               console.log('Alguém submeteu o form')
-              roteamento.push('/chat');
+              // roteamento.push(`/chat?username${username}`);
+              roteamento.push(`/chat?username=${username}`); 
+
             }}
             styleSheet={{
               display: "flex",
